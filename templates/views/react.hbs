@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> React page </title>
+    <link rel="stylesheet" href="/css/styles.css"></link>
+</head>
+<body>
+
+        <div class="main-content">
+         
+         {{>header}} 
+
+         <main>
+            <div id="app"></div>
+            <div id="app2"></div>
+        </main>
+             
+    </div>
+    
+    {{>footer}}
+    <script src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
+    <script src="/scripts/app2.js"></script>
+    
+</body>
+</html>

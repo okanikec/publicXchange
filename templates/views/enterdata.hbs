@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css"></link>
+    <title> Data </title>
+</head>
+<body>
+    
+    <div class="main-content">
+        
+        <p> {{>header}}</p>
+            <h1>  Enter Data </h1>
+        <p>
+            <form>
+                    <p>
+                    <label> Username </label>
+                    <input type="text" name="username" id="username" required>
+                    </p>
+                    
+                    <p>
+                    <label> location: </label>
+                    <select id="filter-by1">
+                        <option value="select">--select--</option>
+                        <option value="naija">Nigeria</option>
+                        <option value="usa">United States of America</option>
+                    </select>
+                    </P>
+
+                    <p>
+                    <label> How much Dollar needed?: </label>
+                    <span class="usd"> 
+                    <i>$</i> <input type="number" name="dollarneed">
+                    </span>
+                    </p>
+
+                    <p>
+                    <label> How much Naira needed?: </label>
+                    <span> 
+                    <i>&#x20A6;</i> <input type="number" name="nairaneed">
+                    </span>
+                    </p>
+
+                    <p>
+                    <label> Enter currency need date: </label>
+                    <input id ="date" type="date" name="needate">
+                    </p>
+
+                    <p>
+                    <label> Transaction completed?: </label>
+                    <select id="filter-by2">
+                        <option>--Select--</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                    </p>
+            </form>
+        </p>
+    </div>
+    {{>footer}}
+    <script src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
+</body>
+</html>
