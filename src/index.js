@@ -23,8 +23,8 @@ hbs.registerPartials(path.join(__dirname, '../templates/partials'))
 //setup static directory to serve
 app.use(express.static(path.join(__dirname, '../public')))
 app.use(express.json())
-app.use(pagesRouter)
 app.use(traderRouter)
+app.use(pagesRouter)
 
 
 
@@ -35,3 +35,21 @@ io.on('', () => {
 server.listen(port, () => {
     console.log(`server is up on port ${port}!`)
 })
+
+// const bcrypt = require('bcryptjs')
+
+// const myFunction = async () => {
+//     const password = 'Red12345!'
+//     const hashedPassword = await bcrypt.hash(password, 8)
+
+//     console.log(password)
+//     console.log(hashedPassword)
+
+//     const isMatch = await bcrypt.compare('red12345!', hashedPassword)
+//     console.log(isMatch)
+
+// }
+
+
+
+// myFunction()
