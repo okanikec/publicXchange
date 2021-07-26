@@ -4,10 +4,13 @@ const express = require('express')
 const socketio = require('socket.io')
 const hbs = require('hbs')
 require('./db/mongoose')
-//const Trader = require('./models/trader')
-//const bodyParser = require('body-parser')
-const pagesRouter = require('./routers/pages')
+const currencySymbol = require('currency-symbol')
+const Trader = require('./models/trader')
+const Order = require('./models/order')
+const bodyParser = require('body-parser')
+const pageRouter = require('./routers/pages')
 const traderRouter = require('./routers/traders')
+const orderRouter = require('./routers/orders')
 
 const app = express()
 const server = http.createServer(app)
@@ -24,7 +27,9 @@ hbs.registerPartials(path.join(__dirname, '../templates/partials'))
 app.use(express.static(path.join(__dirname, '../public')))
 app.use(express.json())
 app.use(traderRouter)
-app.use(pagesRouter)
+app.use(orderRouter)
+app.use(pageRouter)
+
 
 
 
@@ -36,20 +41,18 @@ server.listen(port, () => {
     console.log(`server is up on port ${port}!`)
 })
 
-// const bcrypt = require('bcryptjs')
 
-// const myFunction = async () => {
-//     const password = 'Red12345!'
-//     const hashedPassword = await bcrypt.hash(password, 8)
+const main = async () => {
+    const order = await Order.findById('660fcaafbde61a41cb44a2bf7')
+    console.log(order)
+    await order.populate('trader').execPopulate()
+    console.log(order.trader)
 
-//     console.log(password)
-//     console.log(hashedPassword)
-
-//     const isMatch = await bcrypt.compare('red12345!', hashedPassword)
-//     console.log(isMatch)
-
-// }
+    // const trader = await Trader.findById('60fca5a7dd74c73058d62c30')
+    // await trader.populate('orders').execPopulate()
+    // console.log(trader.orders)
 
 
+}
 
-// myFunction()
+main()

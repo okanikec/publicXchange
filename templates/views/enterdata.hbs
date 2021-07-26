@@ -14,32 +14,37 @@
             <h1>  Enter Data </h1>
         <p>
             <form>
-                    <p>
-                    <label> Username </label>
-                    <input type="text" name="username" id="username" required>
-                    </p>
-                    
-                    <p>
-                    <label> location: </label>
-                    <select id="filter-by1">
-                        <option value="select">--select--</option>
-                        <option value="naija">Nigeria</option>
-                        <option value="usa">United States of America</option>
+
+                    <label> currency buying: </label>
+                    <select id="filter-by1" name="currencyby">
+                            <option value="select">--select--</option>
+                            <option value="nai">NAIRA</option>
+                            <option value="usd">USD</option>
+                            <option value="gbp">GBP</option>
+                            <option value="cad">CAD</option>
+                            <option value="eu">EURO</option>
+                            <option value="aud">AUD</option>
+                            <option value="yua">YUAN</option>
                     </select>
                     </P>
 
                     <p>
-                    <label> How much Dollar needed?: </label>
-                    <span class="usd"> 
-                    <i>$</i> <input type="number" name="dollarneed">
-                    </span>
+                    <label> How much <span id="bai">  </span> are you buying <span id="bais"> </span>  </label>
+                    <input type="number" name="dollarneed">
                     </p>
 
                     <p>
-                    <label> How much Naira needed?: </label>
-                    <span> 
-                    <i>&#x20A6;</i> <input type="number" name="nairaneed">
-                    </span>
+                    <label> What currency are you offering the seller of the <span id="bais2"></span> </label>
+                    <select id="filter-by2" name="currencyofa">
+                        <option value="select">--select--</option>
+                        <option value="nai">NAIRA</option>
+                        <option value="usd">USD</option>
+                        <option value="gbp">GBP</option>
+                        <option value="cad">CAD</option>
+                        <option value="eu">EURO</option>
+                        <option value="aud">AUD</option>
+                        <option value="yua">YUAN</option>
+                    </select>
                     </p>
 
                     <p>
@@ -49,7 +54,7 @@
 
                     <p>
                     <label> Transaction completed?: </label>
-                    <select id="filter-by2">
+                    <select id="filter-by3">
                         <option>--Select--</option>
                         <option value="yes">Yes</option>
                         <option value="no">No</option>

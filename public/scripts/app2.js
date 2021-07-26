@@ -1,162 +1,78 @@
 'use strict';
 
-console.log("App.js is running!");
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-// const app = {
-//     title: 'Indecision App',
-//     subtitle: 'Put your life in the hands of a computer',
-//     options: []
-// }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// const onFormSubmit = (e) => {
-//     e.preventDefault();
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-//     const option = e.target.elements.option.value
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-//     if(option){
-//         app.options.push(option);
-//         e.target.elements.option.value = '';
-//         render();
-//     }
-// }
+var Counter = function (_React$Component) {
+    _inherits(Counter, _React$Component);
 
-// const onRemoveAll = () => {
-//     app.options = [];
-//     render();
-// }
+    function Counter(props) {
+        _classCallCheck(this, Counter);
 
-// const onMakeDecision = () => {
-//     const randomNum = Math.floor(Math.random() * app.options.length)
-//     const option = app.options[randomNum]
-//     alert(option);
-// }
+        var _this = _possibleConstructorReturn(this, (Counter.__proto__ || Object.getPrototypeOf(Counter)).call(this, props));
 
+        _this.handleAddOne = _this.handleAddOne.bind(_this);
+        _this.handleMinusOne = _this.handleMinusOne.bind(_this);
+        _this.handleReset = _this.handleReset.bind(_this);
+        _this.state = {
+            count: 12
+        };
+        return _this;
+    }
 
-// const appRoot = document.getElementById('app');
-
-
-// const render = () => {
-
-//     const template = (
-//         <div>
-//             <h1> {app.title} </h1>
-//             {app.subtitle && <p> {app.subtitle} </p>}
-//             <p> {app.options.length > 0 ? 'Here are your options' : 'No options'} </p>
-//             <button  disabled= {app.options.length=== 0} onClick={onMakeDecision}> What should I do? </button>
-//             <button onClick={onRemoveAll}> Remove All </button>
-//             <ol>
-//                 {
-//                     app.options.map((option) => {
-//                         return <li key={option}> {option} </li>;
-//                     })
-//                 }
-//             </ol>
-//             <form onSubmit={onFormSubmit}>
-//                 <input type="text" name="option"/>
-//                 <button> Add Option </button>
-//             </form>
-//         </div>
-//     )
-
-//     ReactDOM.render(template, appRoot)
-// }
-
-// render();
-
-
-var x = void 0;
-
-var selectedMe = function selectedMe(e) {
-    e.preventDefault();
-    document.querySelector('#filter').addEventListener('change', function (e) {
-        if (e.target.value === "naira") {
-            x = "Naira needed";
+    _createClass(Counter, [{
+        key: 'handleAddOne',
+        value: function handleAddOne() {
+            console.log('handleAddOne');
         }
-
-        if (e.target.value === "dollar") {
-            x = "US Dollar needed";
+    }, {
+        key: 'handleMinusOne',
+        value: function handleMinusOne() {
+            console.log('handleMinusOne');
         }
-
-        if (e.target.value === "gbp") {
-            x = "British Pounds needed";
+    }, {
+        key: 'handleReset',
+        value: function handleReset() {
+            console.log('handleReset');
         }
-
-        if (e.target.value === "cd") {
-            x = "Canadian Dollars needed";
+    }, {
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                null,
+                React.createElement(
+                    'h1',
+                    null,
+                    ' Count: ',
+                    this.state.count,
+                    ' '
+                ),
+                React.createElement(
+                    'button',
+                    { onClick: this.handleAddOne },
+                    ' +1 '
+                ),
+                React.createElement(
+                    'button',
+                    { onClick: this.handleMinusOne },
+                    ' -1 '
+                ),
+                React.createElement(
+                    'button',
+                    { onClick: this.handleReset },
+                    ' reset '
+                )
+            );
         }
+    }]);
 
-        if (e.target.value === "eu") {
-            x = "Euros needed";
-        }
+    return Counter;
+}(React.Component);
 
-        if (e.target.value === "aus") {
-            x = "Australian Dollars needed";
-        }
-
-        if (e.target.value === "yu") {
-            x = "Chinese Yuan needed";
-        }
-    });
-
-    render();
-};
-
-var appRoot = document.getElementById('app');
-
-var render = function render() {
-
-    var template = React.createElement(
-        'div',
-        null,
-        React.createElement(
-            'select',
-            { id: 'filter', onChange: selectedMe },
-            React.createElement(
-                'option',
-                { value: 'naira' },
-                ' Naira'
-            ),
-            React.createElement(
-                'option',
-                { value: 'dollar' },
-                ' Dollar '
-            ),
-            React.createElement(
-                'option',
-                { value: 'gbp' },
-                ' British Pounds '
-            ),
-            React.createElement(
-                'option',
-                { value: 'cd' },
-                ' Canadian Dollars '
-            ),
-            React.createElement(
-                'option',
-                { value: 'eu' },
-                ' EU Euros '
-            ),
-            React.createElement(
-                'option',
-                { value: 'aus' },
-                ' Australian Dollars '
-            ),
-            React.createElement(
-                'option',
-                { value: 'yu' },
-                ' Chinese Yuan '
-            )
-        ),
-        React.createElement(
-            'h1',
-            null,
-            ' ',
-            x,
-            ' '
-        )
-    );
-
-    ReactDOM.render(template, appRoot);
-};
-
-render();
+ReactDOM.render(React.createElement(Counter, null), document.getElementById('app'));

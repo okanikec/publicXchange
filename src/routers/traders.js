@@ -1,19 +1,21 @@
 const express = require('express')
+const auth = require('../middleware/auth')
 const router = new express.Router()
 const Trader = require('../models/trader.js')
 
 
 //add new trader
 router.post('/traders', async (req, res) => {
-    console.log('Hi')
+    //console.log('Hi')
     const trader = new Trader(req.body)
     try {
         await trader.save()
-        res.status(201).send(trader)
+        const token = await trader.generateAuthToken()
+        res.status(201).send({ trader, token})
     } catch (e) {
-        console.log(e)
+        //console.log(e)
         if(e.name === "MongoError"){
-            console.log('email exists')
+            console.log('username or already email exists')
         }
         res.status(400).send(e)
     }
@@ -23,21 +25,45 @@ router.post('/traders', async (req, res) => {
 router.post('/traders/login', async (req, res) => {
     try {
         const trader = await Trader.findByCredentials(req.body.username, req.body.password)
-        res.send(trader)
+        const token = await trader.generateAuthToken()
+        res.send({ trader, token})
     } catch (e) {
+        //console.log(e)
+        if(e){
+            console.log("Error logging in")
+        }
         res.status(400).send(e)
     }
 })
 
-//get all traders
-router.get('/traders', async (req, res) => {
-    console.log('Hello')
+//logout trader
+router.post('/traders/logout', auth, async (req, res) => {
     try {
-        const traders = await Trader.find({})
-        res.send(traders)
+        req.trader.tokens = req.trader.tokens.filter((token) => {
+            return token.token !== req.token
+        })
+        await req.trader.save()
+
+        res.send()
     } catch (e) {
         res.status(500).send()
     }
+})
+
+//logout trader from all terminals
+router.post('/traders/logoutAll', auth, async (req, res) => {
+    try {
+        req.trader.tokens = []
+        await req.trader.save()
+        res.send()
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
+//get trader's profile
+router.get('/traders/me', auth, async (req, res) => {
+    res.send(req.trader)
 })
 
 
@@ -56,7 +82,7 @@ router.get('/traders/:id', async (req, res) => {
 })
 
 //update individual trader
-router.patch('/traders/:id', async (req, res) => {
+router.patch('/traders/me', auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = [ 'email', 'username', 'location', 'password']
     const isValidOperation = updates.every((update) =>  allowedUpdates.includes(update))
@@ -66,31 +92,23 @@ router.patch('/traders/:id', async (req, res) => {
     }
 
     try{
-        const trader = await Trader.findById(req.params.id)
 
-        updates.forEach((update) => trader[update] = req.body[update])
+        updates.forEach((update) => req.trader[update] = req.body[update])
 
         //const trader = await Trader.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true})
-
-        if(!trader){
-            return res.status(404).send()
-        }
-        res.send(trader)
+        await req.trader.save()
+        res.send(req.trader)
     } catch (e) {
         res.status(400).send(e)
     }
 })
 
 //delete individual trader
-router.delete('/traders/:id', async (req, res) => {
+router.delete('/traders/me', auth, async (req, res) => {
         
     try{
-        const trader = await Trader.findByIdAndDelete(req.params.id)
-        
-        if(!trader){
-            return res.status(404).send()
-        }
-        res.send(trader)
+        await req.trader.remove()
+        res.send(req.trader)
     } catch (e) {
         res.status(500).send()
     }

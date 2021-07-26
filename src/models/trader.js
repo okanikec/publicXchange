@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const traderSchema = new mongoose.Schema({
     username: {
@@ -34,10 +35,44 @@ const traderSchema = new mongoose.Schema({
     currency:{
         type: Number,
         trim: true
-    }
+    },chat:{
+        type: String,
+        default: "chat with "
+    },
+    tokens: [
+        { token: { type: String, required: true } }
+    ]
 })
 
-//
+traderSchema.virtual('orders', {
+    ref: 'Order',
+    localField: '_id',
+    foreignField: 'trader'
+})
+
+// hide some data (password & tokens)
+traderSchema.methods.toJSON = function () {
+    const trader = this
+    const traderObject = trader.toObject()
+
+    delete traderObject.password
+    delete traderObject.tokens
+
+    return traderObject
+}
+
+//generate Auth Token
+traderSchema.methods.generateAuthToken = async function () {
+    const trader = this
+    const token = jwt.sign({ _id: trader._id.toString() }, 'theraininspain')
+
+    trader.tokens = trader.tokens.concat({ token })
+    await trader.save()
+    return token
+}
+
+
+// login trader
 traderSchema.statics.findByCredentials = async (username, password) => {
     const trader = await Trader.findOne({username})
 
